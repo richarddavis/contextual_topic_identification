@@ -1,3 +1,4 @@
+
 from model import *
 from utils import *
 import pandas as pd
@@ -13,6 +14,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--fpath', default='/contextual_topic_identification/data/steam_reviews.csv')
+    parser.add_argument('--colname', default='review')
     parser.add_argument('--ntopic', default=10)
     parser.add_argument('--method', default='TFIDF')
     parser.add_argument('--samp_size', default=10000)
@@ -20,7 +22,7 @@ if __name__ == '__main__':
 
     data = pd.read_csv(str(args.fpath))
     data = data.fillna('')  # only the comments has NaN's
-    rws = data.review
+    rws = data[args.colname]
     sentences, token_lists, idx_in = preprocess(rws, samp_size=int(args.samp_size))
     # Define the topic model object
     tm = Topic_Model(k = int(args.ntopic), method = str(args.method))
