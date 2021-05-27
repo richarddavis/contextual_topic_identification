@@ -33,7 +33,7 @@ if __name__ == '__main__':
     # Evaluate using metrics
 
 
-    model_path = pathlib.Path(__file__).parent.absolute()
+    model_path = pathlib.Path(__file__).parent.parent.absolute()
     model_path = os.path.join(model_path, 'docs/saved_models')
 
     with open(os.path.join(model_path, f'{tm.id}.file'), 'wb') as f:

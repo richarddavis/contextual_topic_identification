@@ -83,7 +83,7 @@ def visualize(model):
     print('Calculating UMAP projection. Done!')
     plot_proj(vec_umap, model.cluster_model.labels_)
 
-    image_path = pathlib.Path(__file__).parent.absolute()
+    image_path = pathlib.Path(__file__).parent.parent.absolute()
     dr = os.path.join(image_path, f'docs/images/{model.method}/{model.id}')
     if not os.path.exists(dr):
         os.makedirs(dr)
@@ -111,7 +111,7 @@ def get_wordcloud(model, token_lists, topic):
     plt.axis("off")
     plt.tight_layout(pad=0)
 
-    image_path = pathlib.Path(__file__).parent.absolute()
+    image_path = pathlib.Path(__file__).parent.parent.absolute()
     dr = os.path.join(image_path, f'docs/images/{model.method}/{model.id}')
     if not os.path.exists(dr):
         os.makedirs(dr)
