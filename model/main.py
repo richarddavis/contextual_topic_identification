@@ -5,6 +5,7 @@ import pandas as pd
 import pickle
 import matplotlib.pyplot as plt
 import os
+import pathlib
 
 import warnings
 warnings.filterwarnings('ignore', category=Warning)
@@ -31,7 +32,9 @@ if __name__ == '__main__':
     tm.fit(sentences, token_lists)
     # Evaluate using metrics
 
-    model_path = 'docs/saved_models'
+
+    model_path = pathlib.Path(__file__).parent.absolute()
+    model_path = os.path.join(model_path, 'docs/saved_models')
 
     with open(os.path.join(model_path, f'{tm.id}.file'), 'wb') as f:
         pickle.dump(tm, f, pickle.HIGHEST_PROTOCOL)

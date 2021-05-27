@@ -6,6 +6,7 @@ from wordcloud import WordCloud
 from gensim.models.coherencemodel import CoherenceModel
 import numpy as np
 import os
+import pathlib
 
 
 def get_topic_words(token_lists, labels, k=None):
@@ -81,7 +82,9 @@ def visualize(model):
     vec_umap = reducer.fit_transform(model.vec[model.method])
     print('Calculating UMAP projection. Done!')
     plot_proj(vec_umap, model.cluster_model.labels_)
-    dr = 'docs/images/{}/{}'.format(model.method, model.id)
+
+    image_path = pathlib.Path(__file__).parent.absolute()
+    dr = os.path.join(image_path, f'docs/images/{model.method}/{model.id}')
     if not os.path.exists(dr):
         os.makedirs(dr)
     plt.savefig(dr + '/2D_vis')
@@ -107,7 +110,9 @@ def get_wordcloud(model, token_lists, topic):
     plt.imshow(wordcloud)
     plt.axis("off")
     plt.tight_layout(pad=0)
-    dr = 'docs/images/{}/{}'.format(model.method, model.id)
+
+    image_path = pathlib.Path(__file__).parent.absolute()
+    dr = os.path.join(image_path, f'docs/images/{model.method}/{model.id}')
     if not os.path.exists(dr):
         os.makedirs(dr)
     plt.savefig(dr + '/Topic' + str(topic) + '_wordcloud')
