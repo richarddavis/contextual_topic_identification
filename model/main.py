@@ -31,8 +31,7 @@ if __name__ == '__main__':
     tm.fit(sentences, token_lists)
     # Evaluate using metrics
 
-    split_path = args.fpath.split('contextual_topic_identification')
-    model_path = os.path.join(os.path.join(split_path[0], 'contextual_topic_identification'), 'docs/saved_models')
+    model_path = 'docs/saved_models'
 
     with open(os.path.join(model_path, f'{tm.id}.file'), 'wb') as f:
         pickle.dump(tm, f, pickle.HIGHEST_PROTOCOL)
