@@ -4,6 +4,7 @@ from utils import *
 import pandas as pd
 import pickle
 import matplotlib.pyplot as plt
+import os
 
 import warnings
 warnings.filterwarnings('ignore', category=Warning)
@@ -29,7 +30,11 @@ if __name__ == '__main__':
     # Fit the topic model by chosen method
     tm.fit(sentences, token_lists)
     # Evaluate using metrics
-    with open("/contextual_topic_identification/docs/saved_models/{}.file".format(tm.id), "wb") as f:
+
+    split_path = args.fpath.split('contextual_topic_identification')
+    model_path = os.path.join(os.path.join(split_path[0], 'contextual_topic_identification'), 'docs/saved_models')
+
+    with open(os.path.join(model_path, f'{tm.id}.file'), 'wb') as f:
         pickle.dump(tm, f, pickle.HIGHEST_PROTOCOL)
 
     print('Coherence:', get_coherence(tm, token_lists, 'c_v'))
