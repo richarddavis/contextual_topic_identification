@@ -1,6 +1,6 @@
 
-from model import *
-from utils import *
+import model
+import utils
 import pandas as pd
 import pickle
 import dill
@@ -26,9 +26,9 @@ if __name__ == '__main__':
     data = pd.read_csv(str(args.fpath))
     data = data.fillna('')  # only the comments has NaN's
     rws = data[args.colname]
-    sentences, token_lists, idx_in = preprocess(rws, samp_size=int(args.samp_size))
+    sentences, token_lists, idx_in = model.preprocess(rws, samp_size=int(args.samp_size))
     # Define the topic model object
-    tm = Topic_Model(k = int(args.ntopic), method = str(args.method))
+    tm = model.Topic_Model(k = int(args.ntopic), method = str(args.method))
     # Fit the topic model by chosen method
     tm.fit(sentences, token_lists)
     # Evaluate using metrics
@@ -39,9 +39,9 @@ if __name__ == '__main__':
     with open(os.path.join(model_path, f'{tm.id}.file'), 'wb') as f:
         dill.dump(tm, f, pickle.HIGHEST_PROTOCOL)
 
-    print('Coherence:', get_coherence(tm, token_lists, 'c_v'))
-    print('Silhouette Score:', get_silhouette(tm))
+    print('Coherence:', utils.get_coherence(tm, token_lists, 'c_v'))
+    print('Silhouette Score:', utils.get_silhouette(tm))
     # visualize and save img
-    visualize(tm)
+    utils.visualize(tm)
     for i in range(tm.k):
-        get_wordcloud(tm, token_lists, i)
+        utils.get_wordcloud(tm, token_lists, i)
