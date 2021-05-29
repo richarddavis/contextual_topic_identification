@@ -3,6 +3,7 @@ from model import *
 from utils import *
 import pandas as pd
 import pickle
+import dill
 import matplotlib.pyplot as plt
 import os
 import pathlib
@@ -32,12 +33,11 @@ if __name__ == '__main__':
     tm.fit(sentences, token_lists)
     # Evaluate using metrics
 
-
     model_path = pathlib.Path(__file__).parent.parent.absolute()
     model_path = os.path.join(model_path, 'docs/saved_models')
 
     with open(os.path.join(model_path, f'{tm.id}.file'), 'wb') as f:
-        pickle.dump(tm, f, pickle.HIGHEST_PROTOCOL)
+        dill.dump(tm, f, pickle.HIGHEST_PROTOCOL)
 
     print('Coherence:', get_coherence(tm, token_lists, 'c_v'))
     print('Silhouette Score:', get_silhouette(tm))
