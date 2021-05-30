@@ -167,14 +167,14 @@ class Topic_Model:
 
         if out_of_sample:
             corpus = [self.dictionary.doc2bow(text) for text in token_lists]
-            if self.method != 'LDA':
+            if self.method != 'LDA' or self.method != 'BERT_LDA':
                 vec = self.vectorize(sentences, token_lists)
                 print(vec)
         else:
             corpus = self.corpus
             vec = self.vec.get(self.method, None)
 
-        if self.method == "LDA":
+        if self.method == "LDA" or self.method == 'BERT_LDA':
             lbs = np.array(list(map(lambda x: sorted(self.ldamodel.get_document_topics(x),
                                                      key=lambda x: x[1], reverse=True)[0][0],
                                     corpus)))
