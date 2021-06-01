@@ -158,23 +158,15 @@ class Topic_Model:
             self.cluster_model.fit(self.vec[method])
             print('Clustering embeddings. Done!')
 
-    def predict(self, sentences, token_lists, out_of_sample=None):
+    def predict(self, sentences, token_lists):
         """
         Predict topics for new_documents
         """
-        # Default as False
-        out_of_sample = out_of_sample is not None
 
-        if out_of_sample:
-            corpus = [self.dictionary.doc2bow(text) for text in token_lists]
-            if self.method != 'LDA' or self.method != 'LDA_BERT':
-                vec = self.vectorize(sentences, token_lists)
-                print(vec)
-        else:
-            corpus = self.corpus
-            vec = self.vec.get(self.method, None)
+        corpus = [self.dictionary.doc2bow(text) for text in token_lists]
+        vec = self.vectorize(sentences, token_lists)
 
-        if self.method == "LDA" or self.method == 'LDA_BERT':
+        if self.ldamodel is not None:
             lbs = np.array(list(map(lambda x: sorted(self.ldamodel.get_document_topics(x),
                                                      key=lambda x: x[1], reverse=True),
                                     corpus)))
